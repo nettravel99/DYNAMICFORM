@@ -1,23 +1,26 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { reducer } from 'redux-form'
+import { createStore, applyMiddleware, compose } from "redux";
+import combineReducers from "./reducers";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 
-const initialState = {}
+const initialState = {};
 
-const reducers = combineReducers({ form: reducer })
+const enhancers = [];
+const middleware = [];
 
-const enhancers = []
-const middleware = []
+if (process.env.NODE_ENV === "development") {
+  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
-if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__
-
-  if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
+  if (typeof devToolsExtension === "function") {
+    enhancers.push(devToolsExtension());
   }
 }
 
-const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers)
+const composedEnhancers = compose(
+  applyMiddleware(...middleware, thunk, logger),
+  ...enhancers
+);
 
-const store = createStore(reducers, initialState, composedEnhancers)
+const store = createStore(combineReducers, initialState, composedEnhancers);
 
-export default store
+export default store;

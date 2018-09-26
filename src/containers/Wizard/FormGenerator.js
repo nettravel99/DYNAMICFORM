@@ -1,22 +1,22 @@
-import React from 'react'
-import { FormSection, Field } from 'redux-form'
-import { Row, Col } from 'react-bootstrap'
-import { Input, Radio, Select } from '../../components'
-import { WizardContext } from './ContextProvider'
+import React from "react";
+import { FormSection, Field } from "redux-form";
+import { Row, Col } from "react-bootstrap";
+import { Input, Radio, Select } from "../../components";
+import { WizardContext } from "./ContextProvider";
 
 const stringToComponentMapper = {
   input: Input,
   radio: Radio,
   select: Select
-}
+};
 
 const validate = rule => value => {
   if (!rule) {
-    return undefined
+    return undefined;
   }
 
-  return value && new RegExp(rule).test(value) ? undefined : 'Validation Error'
-}
+  return value && new RegExp(rule).test(value) ? undefined : "Validation Error";
+};
 
 const FormGenerator = () => (
   <div>
@@ -46,6 +46,6 @@ const FormGenerator = () => (
       }
     </WizardContext.Consumer>
   </div>
-)
+);
 
-export default FormGenerator
+export default FormGenerator;

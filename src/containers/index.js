@@ -8,7 +8,7 @@ import axios from "axios";
 
 const constructInitialValues = data => {
   const root = {};
-  //console.log("data", data);
+  console.log("data", data);
   data.sections.forEach(s => {
     root[s.name] = {};
 
@@ -16,7 +16,7 @@ const constructInitialValues = data => {
       root[s.name][f.name] = f.initialValue;
     });
   });
-  //console.log("root", root);
+  console.log("root", root);
   return root;
 };
 
@@ -35,39 +35,29 @@ const NewWizard = props => (
   /////////////////////////////////////////////////////////////////
 
   <WizardContext.Consumer>
-    {({ currentStepIndex, steps, goToStep, data }) => {
-      //
-      //
-      // console.log("data", data);
-      // axios
-      //   .get("http://127.0.0.1:3002/api/dictionary/")
-      //   .then(function(response) {
-      //     console.log("Axios results: ", response.data.results[0].props);
-      //     const aaa = response.data.results[0].props; //response
-      //     //  alert("InAxios", response)
-      //     //////////////////////////////////////
-      //   })
-      //   .catch(function(error) {
-      //     //alert("Axios ")
-      //     console.log("Error occured retrieving data! " + error);
-      //   });
+    {({ currentStepIndex, steps, goToStep }) => {
+      axios
+        .get("http://127.0.0.1:3002/api/dictionary/")
+        .then(function(response) {
+          console.log("Axios results: ", response.data.results[0].props);
+          const aaa = response.data.results[0].props; //response
+          //  alert("InAxios", response)
+          //////////////////////////////////////
+        })
+        .catch(function(error) {
+          //alert("Axios ")
+          console.log("Error occured retrieving data! " + error);
+        });
 
       //console.log("Current Step Index", currentStepIndex);
       //console.log("goToStep", goToStep);
       //const steps1 = getStepsDB();
-
+      //steps = steps1;
       const initialValues = {};
-
-      steps = data;
-  
-      if (steps === "") {
-        return <div />;
-      }
-
+      //console.log("steps", steps);
       steps.forEach(s => {
         initialValues[s.name] = constructInitialValues(s);
       });
-
       return (
         <div>
           <NavBar
@@ -87,8 +77,7 @@ const NewWizard = props => (
           ))}
         </div>
       );
-    } // This is the matching
-    }
+    }}
   </WizardContext.Consumer>
 );
 
