@@ -7,7 +7,20 @@ import api from "../api";
 export const login = credentials => dispatch => api
   .user
   .login(credentials)
-  .then(user => dispatch(userLoggedIn(user)));
+  .then(user => {
+    console.log("Add to local storage", user.token)
+    localStorage.UserJWT = user.token;
+    dispatch(userLoggedIn(user))
+  });
+
+export const logOut = () => dispatch => {
+  localStorage.removeItem('UserJWT')
+  dispatch(userLoggedOut())
+
+};
 
 // User Logged In action
 export const userLoggedIn = user => ({type: "USER_LOGGED_IN", user});
+
+// User Logged Out action
+export const userLoggedOut = () => ({type: "USER_LOGGED_OUT", user: {}});
