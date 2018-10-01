@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
   ) => this
     .props
     .login(data)
-    .then(() => this.props.history.push("/") //if succesful go to home page
+    .then(() => this.props.history.push("/dashboard") //if succesful go to dashboard
     );
 
   render() {
