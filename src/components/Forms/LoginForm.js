@@ -15,7 +15,10 @@ export class LoginForm extends Component {
       password: ""
     },
     loading: false,
-    errors: {}
+    errors: {
+      global: ""
+    }
+
   };
 
   // event is passed to onChange This is a universal onChange for text
@@ -39,7 +42,10 @@ export class LoginForm extends Component {
         this
           .props
           .submit(this.state.data)
-          .catch(err => this.setState({errors: err.response.data.errors, loading: false}));
+          .catch(err => {
+            console.log("Login Form err: ", err)
+            this.setState({errors: err.response.data.errors, loading: false})
+          });
       }
     }
   };

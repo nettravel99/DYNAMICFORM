@@ -8,5 +8,6 @@ export default {
     signup: user => axios
       .post("http://127.0.0.1:3050/api/signup", {user})
       .then(res => res.data.data)
+
   }
 };

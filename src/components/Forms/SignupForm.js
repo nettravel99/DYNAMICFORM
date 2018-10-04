@@ -39,7 +39,31 @@ export class SignUpForm extends Component {
                 this
                     .props
                     .submit(this.state.data)
-                    .catch(err => this.setState({errors: err.response.data.errors, loading: false}));
+                    .catch(err => {
+                        console.log("Response Object :", err)
+
+                        if (err.response === undefined || err.response.data.errors.global === undefined) {
+                            this.setState({
+                                errors: {
+
+                                    global: String(err)
+                                },
+                                loading: false
+                            })
+
+                        } else {
+
+                            this.setState({
+                                errors: {
+
+                                    global: String(err.response.data.errors.global) + " " + String(err.response.status) + " " + String(err.response.statusText)
+                                },
+                                loading: false
+                            })
+
+                        }
+
+                    })
             }
         }
     };
@@ -82,7 +106,7 @@ export class SignUpForm extends Component {
                         name="password"
                         placeholder="Make it secure"
                         value={data.password}
-                        onChange={this.onChange}/> {errors.password && <InlineError text={errors.password}/>}
+                        onChange={this.onChange}/>{" "} {errors.password && <InlineError text={errors.password}/>}
                 </Form.Field>
                 <Button primary>Submit</Button>
             </Form>
