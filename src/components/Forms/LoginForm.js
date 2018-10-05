@@ -44,11 +44,35 @@ export class LoginForm extends Component {
           .submit(this.state.data)
           .catch(err => {
             console.log("Login Form err: ", err)
-            this.setState({errors: err.response.data.errors, loading: false})
+            if (err.response === undefined || err.reponse.data === undefined)
+            {
+              this.setState({
+                errors: {
+            
+                    global: String(err) 
+                },
+                loading: false
+            })
+          }
+         else {
+              this.setState({
+                errors: {
+            
+                    global: String( err.response.data.errors)
+                },
+                loading: false
+            })
+            }
           });
       }
     }
   };
+
+
+  
+
+
+
 
   validate = data => {
     const errors = {};
