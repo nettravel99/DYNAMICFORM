@@ -7,6 +7,10 @@ export default {
       .then(res => res.data.data),
     signup: user => axios
       .post("http://127.0.0.1:3050/api/signup", {user})
+      .then(res => res.data.data),
+
+    confirm: token => axios
+      .post("http://127.0.0.1:3050/api/auth/confirm", {token})
       .then(res => res.data.data)
 
   }

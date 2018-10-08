@@ -44,35 +44,29 @@ export class LoginForm extends Component {
           .submit(this.state.data)
           .catch(err => {
             console.log("Login Form err: ", err)
-            if (err.response === undefined || err.reponse.data === undefined)
-            {
+            //if (err.response === undefined || err.reponse.data === undefined)
+            if (typeof err === 'object' && typeof err.response === 'object' && typeof err.response.data === 'object' && typeof err.response.data.errors === 'object') {
+              console.log("one:")
               this.setState({
                 errors: {
-            
-                    global: String(err) 
+                  global: String(err.response.data.errors.global)
                 },
                 loading: false
-            })
-          }
-         else {
+              })
+            } else {
+              console.log("THis is the else - should not come here: ", err)
               this.setState({
                 errors: {
-            
-                    global: String( err.response.data.errors)
+                  global: String(JSON.stringify(err.response))
                 },
+
                 loading: false
-            })
+              })
             }
           });
       }
     }
   };
-
-
-  
-
-
-
 
   validate = data => {
     const errors = {};
